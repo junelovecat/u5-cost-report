@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>U5 成本风险分析报告 v3 2026-03-18</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Microsoft YaHei', sans-serif; background: #f0f2f5; padding: 24px; color: #333; font-size: 14px; }
+h1 { font-size: 22px; margin-bottom: 4px; }
+.meta { font-size: 13px; color: #888; margin-bottom: 24px; }
+.summary-cards { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.card { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); flex: 1; min-width: 140px; text-align: center; }
+.card .num { font-size: 22px; font-weight: bold; }
+.card .label { font-size: 12px; color: #888; margin-top: 4px; }
+.card.red .num { color: #f5222d; }
+.card.orange .num { color: #fa8c16; }
+.section { background: #fff; border-radius: 10px; padding: 20px 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 20px; }
+.section h2 { font-size: 16px; margin-bottom: 16px; border-left: 4px solid #1890ff; padding-left: 10px; }
+.risk-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; white-space: nowrap; }
+.risk-red { background: #fff1f0; color: #f5222d; border: 1px solid #ffa39e; }
+.risk-orange { background: #fff7e6; color: #fa8c16; border: 1px solid #ffd591; }
+.risk-yellow { background: #fffbe6; color: #faad14; border: 1px solid #ffe58f; }
+.risk-green { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #fafafa; padding: 10px 12px; text-align: left; border-bottom: 2px solid #f0f0f0; font-weight: 600; color: #555; }
+td { padding: 9px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+tr:hover td { background: #fafafa; }
+.row-red td { background: #fff1f0; }
+.row-orange td { background: #fff7e6; }
+.row-yellow td { background: #fffbe6; }
+.dual-bar { display: flex; flex-direction: column; gap: 3px; }
+.bar-row { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.bar-label { width: 44px; text-align: right; color: #888; flex-shrink: 0; }
+.progress-bar { background: #f0f0f0; border-radius: 4px; height: 6px; overflow: hidden; width: 110px; }
+.progress-fill { height: 100%; border-radius: 4px; }
+.fill-green { background: #52c41a; }
+.fill-yellow { background: #faad14; }
+.fill-orange { background: #fa8c16; }
+.fill-red { background: #f5222d; }
+.fill-blue { background: #1890ff; }
+.bar-pct { font-size: 11px; color: #555; font-weight: bold; min-width: 38px; }
+.alert-box { border-left: 4px solid; padding: 10px 14px; margin-bottom: 10px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.7; }
+.alert-red { border-color: #f5222d; background: #fff1f0; }
+.alert-orange { border-color: #fa8c16; background: #fff7e6; }
+.alert-yellow { border-color: #faad14; background: #fffbe6; }
+.rolling-table td, .rolling-table th { padding: 7px 10px; font-size: 12px; }
+.editable { min-height: 28px; padding: 4px 6px; border-radius: 4px; }
+.editable:focus { outline: 1px solid #1890ff; background: #f0f8ff; }
+.editable:empty:before { content: attr(placeholder); color: #bbb; }
+.note { font-size: 11px; color: #999; margin-top: 8px; }
+.persons { font-size: 12px; color: #666; }
+</style>
+</head>
+<body>
+
+<h1>🦞 U5 成本风险分析报告 v3</h1>
+<div class="meta">生成时间：2026-03-18 | 数据来源：BI成本监控报告 | 基线方法：滚动基线（Page22/26 精细化管理实践）</div>
+
+<div class="summary-cards">
+  <div class="card"><div class="num">11,126.5万</div><div class="label">26年总预算</div></div>
+  <div class="card red"><div class="num">3,033.1万</div><div class="label">Q1实际消耗</div></div>
+  <div class="card orange"><div class="num">+251.5万</div><div class="label">vs Q1指导基线（超基线9%）</div></div>
+  <div class="card"><div class="num">902.1万/月</div><div class="label">Q2起滚动基线（已修正）</div></div>
+  <div class="card"><div class="num">8,093.4万</div><div class="label">剩余可用预算（M4-M12）</div></div>
+</div>
+
+<div class="section">
+  <h2>📐 滚动基线说明</h2>
+  <table>
+    <tr><th>概念</th><th>计算方式</th><th>26年数值</th></tr>
+    <tr><td><strong>指导基线</strong></td><td>年度预算 ÷ 12，静态参考线</td><td>927.2万/月 | Q1累计 2,781.6万</td></tr>
+    <tr><td><strong>Q1扰动</strong></td><td>实际消耗 - 指导基线</td><td>3,033.1 - 3,484.0 = <strong style="color:#52c41a">-450.9万</strong>（低于BI滚动基线）</td></tr>
+    <tr><td><strong>滚动基线</strong></td><td>指导基线 - 扰动÷剩余月数(10)</td><td>（待M3末更新：当前低于基线，后续可适当放宽）</td></tr>
+  </table>
+  <div class="note">※ 滚动基线会在每月末根据最新实际消耗重新计算。25年Q1实际占年度37.9%，本年Q1消耗27.3%，节奏偏保守，但「其他」管线异常需核查。</div>
+</div>
+
+<div class="section">
+  <h2>📅 滚动基线规划（M4-M12）</h2>
+  <table class="rolling-table">
+    <thead>
+      <tr><th>月份</th><th>滚动基线</th><th>累计消耗上限</th><th>剩余可用预算</th><th>备注</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:#e6f4ff"><td>M1-3（已完成）</td><td>实际 3,033.1万</td><td>3,033.1万</td><td>8,093.4万</td><td>超指导基线 +251.5万</td></tr>
+      <tr><td>M4（4月）</td><td>902.1万</td><td>3,935.2万</td><td>7,191.3万</td><td></td></tr>
+      <tr><td>M5（5月）</td><td>902.1万</td><td>4,837.2万</td><td>6,289.3万</td><td></td></tr>
+      <tr><td>M6（6月）</td><td>902.1万</td><td>5,739.3万</td><td>5,387.2万</td><td></td></tr>
+      <tr><td>M7（7月）</td><td>902.1万</td><td>6,641.3万</td><td>4,485.2万</td><td></td></tr>
+      <tr><td>M8（8月）</td><td>902.1万</td><td>7,543.4万</td><td>3,583.1万</td><td></td></tr>
+      <tr><td>M9（9月）</td><td>902.1万</td><td>8,445.5万</td><td>2,681.0万</td><td></td></tr>
+      <tr><td>M10（10月）</td><td>902.1万</td><td>9,347.5万</td><td>1,779.0万</td><td></td></tr>
+      <tr><td>M11（11月）</td><td>902.1万</td><td>10,249.6万</td><td>876.9万</td><td>⚠️ 注意年末收紧</td></tr>
+      <tr><td>M12（12月）</td><td>876.9万</td><td>11,126.5万</td><td>0万</td><td>末月自动修正至收支平衡</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>📊 各管线消耗 vs 滚动基线</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>管线</th><th>负责人</th><th>总预算</th><th>Q1基线</th><th>已消耗</th><th>vs基线</th><th>消耗进度</th><th>风险</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="row-red">
+        <td><strong>整体</strong></td>
+        <td class="persons">石佳俊</td>
+        <td>11,126.5万</td><td>2,781.6万</td><td>3,033.1万</td>
+        <td><strong style="color:#f5222d">-450.9万 ▼87%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-yellow" style="width:27.3%"></div></div><span class="bar-pct">27.3%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span><br><span style="font-size:11px;color:#888">低于BI滚动基线</span></td></tr>
+      <tr class="row-orange">
+        <td><strong>其他</strong></td>
+        <td class="persons">石佳俊、程宽</td>
+        <td>751.0万</td><td>187.8万</td><td>498.0万</td>
+        <td><strong style="color:#f5222d">+310.2万 ▲265%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-red" style="width:100%"></div></div><span class="bar-pct">66.3%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-orange">🟠 橙色</span></td>
+      </tr>
+      <tr class="row-yellow">
+        <td><strong>IP内容</strong></td>
+        <td class="persons">舒飞、殷嘉慕、陶添</td>
+        <td>6,821.2万</td><td>1,705.3万</td><td>1,845.5万</td>
+        <td><strong style="color:#fa8c16">+140.2万 ▲108%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-yellow" style="width:27.1%"></div></div><span class="bar-pct">27.1%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-yellow">🟡 黄色</span></td>
+      </tr>
+      <tr>
+        <td><strong>创意中心</strong></td>
+        <td class="persons">石峰、石佳俊、刘骐</td>
+        <td>2,287.7万</td><td>571.9万</td><td>464.8万</td>
+        <td><strong style="color:#52c41a">-107.1万 ▼81%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-green" style="width:20.3%"></div></div><span class="bar-pct">20.3%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span><br><span style="font-size:11px;color:#fa8c16">视频环节45%⚠️</span></td>
+      </tr>
+      <tr>
+        <td><strong>系统社交</strong></td>
+        <td class="persons">黄桢、唐翔宇</td>
+        <td>525.2万</td><td>131.3万</td><td>89.3万</td>
+        <td><strong style="color:#52c41a">-42.0万 ▼68%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-green" style="width:17%"></div></div><span class="bar-pct">17.0%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span><br><span style="font-size:11px;color:#faad14">GUI 28.8%</span></td>
+      </tr>
+      <tr>
+        <td><strong>海外</strong></td>
+        <td class="persons">翁尔森、程隆怡</td>
+        <td>391.9万</td><td>98.0万</td><td>83.8万</td>
+        <td><strong style="color:#52c41a">-14.2万 ▼85%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-green" style="width:21.4%"></div></div><span class="bar-pct">21.4%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span></td>
+      </tr>
+      <tr>
+        <td><strong>UGC运营</strong></td>
+        <td class="persons">方草、余志恒</td>
+        <td>120.9万</td><td>30.2万</td><td>25.3万</td>
+        <td><strong style="color:#52c41a">-4.9万 ▼84%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-green" style="width:20.9%"></div></div><span class="bar-pct">20.9%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span></td>
+      </tr>
+      <tr>
+        <td><strong>UGC研发</strong></td>
+        <td class="persons">李志轶、冯佳雯</td>
+        <td>180.0万</td><td>45.0万</td><td>9.8万</td>
+        <td><strong style="color:#52c41a">-35.2万 ▼22%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-green" style="width:5.4%"></div></div><span class="bar-pct">5.4%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span><br><span style="font-size:11px;color:#999">消耗偏低，注意积压</span></td>
+      </tr>
+      <tr>
+        <td><strong>数值AI</strong></td>
+        <td class="persons">陈钊、舒飞</td>
+        <td>4.8万</td><td>1.2万</td><td>1.3万</td>
+        <td><strong style="color:#faad14">+0.1万 ▲108%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-yellow" style="width:27.1%"></div></div><span class="bar-pct">27.1%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-yellow">🟡 黄色</span><br><span style="font-size:11px;color:#999">绝对值小</span></td>
+      </tr>
+      <tr>
+        <td><strong>赛事</strong></td>
+        <td class="persons">方草、戴廷达</td>
+        <td>43.7万</td><td>10.9万</td><td>5.8万</td>
+        <td><strong style="color:#52c41a">-5.1万 ▼53%</strong></td>
+        <td><div class="dual-bar">
+          <div class="bar-row"><span class="bar-label">实际</span><div class="progress-bar"><div class="progress-fill fill-green" style="width:13.3%"></div></div><span class="bar-pct">13.3%</span></div>
+          <div class="bar-row"><span class="bar-label">基线</span><div class="progress-bar"><div class="progress-fill fill-blue" style="width:25%"></div></div><span class="bar-pct">25.0%</span></div>
+        </div></td>
+        <td><span class="risk-badge risk-green">🟢 正常</span><br><span style="font-size:11px;color:#999">仅GUI月度单</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">蓝色进度条 = Q1指导基线目标25%（均分）；彩色进度条 = 实际消耗率。<br>⚠️ BI实际Q1滚动基线为3,484万（1月1489+2月967+3月1028），实际消耗3,033.1万，<strong style="color:#52c41a">低于BI基线450.9万（▼87%）</strong>，整体节奏健康。主要风险集中在「其他」管线归属问题。</div>
+</div>
+
+<div class="section">
+  <h2>🚨 风险详情</h2>
+  <div class="alert-box alert-red">
+    <strong>🔴 整体超Q1指导基线9%（+251.5万）</strong><br>
+    Q1实际3,033.1万，M4起滚动基线修正为<strong>902.1万/月</strong>（较指导基线每月少25.1万）。参考25年Q1占全年37.9%，本年Q1占27.3%，整体节奏不算激进，主要问题集中在「其他」管线。
+  </div>
+  <div class="alert-box alert-orange">
+    <strong>🟠 「其他」管线超Q1基线265%（+310万）— 需立即核查归属</strong><br>
+    实际498万 vs 基线188万。主要明细：<br>
+    • 【IP内容】春节跨年商业化资产 100万 · 【系统社交】2025-10月 90万<br>
+    • 【UGC研发】2025-10月 90万 · 【海外】2025-10月 89.9万 · 【UGC研发】2025-9月 70万<br>
+    以上合计≈440万（88%），疑似历史跨管线成本归入「其他」，<strong>建议核查是否应还原至各原始管线</strong>。
+  </div>
+  <div class="alert-box alert-yellow">
+    <strong>🟡 IP内容超Q1基线8%（+140万）</strong><br>
+    视频类消耗30.6%（155万/506.1万基线），M30（4/17起）将有T0/T1皮肤+PV集中结算，预计下月压力增大。
+  </div>
+</div>
+
+<div class="section">
+  <h2>💡 风险追踪与行动记录</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:12px;">点击「行动结果」「当前进展」「预期时间」单元格可直接编辑，用于月度review追踪。</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:60px">优先级</th>
+        <th>行动内容</th>
+        <th style="width:90px">负责人</th>
+        <th style="width:180px">行动结果 / 解决方案</th>
+        <th style="width:160px">当前进展</th>
+        <th style="width:90px">预期解决时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="row-red">
+        <td><span class="risk-badge risk-red">立即</span></td>
+        <td>核查「其他」管线498万明细，确认历史跨管线归属是否正确（疑似应还原至各管线）</td>
+        <td>石佳俊、程宽</td>
+        <td class="editable" contenteditable="true" placeholder="填写结果..."></td>
+        <td class="editable" contenteditable="true" placeholder="当前进展..."></td>
+        <td class="editable" contenteditable="true" placeholder="预期时间..."></td>
+      </tr>
+      <tr class="row-orange">
+        <td><span class="risk-badge risk-orange">本周</span></td>
+        <td>评估创意中心视频环节Q2需求量（当前消耗45%，超滚动基线约2倍）</td>
+        <td>石峰、石佳俊、刘骐</td>
+        <td class="editable" contenteditable="true" placeholder="填写结果..."></td>
+        <td class="editable" contenteditable="true" placeholder="当前进展..."></td>
+        <td class="editable" contenteditable="true" placeholder="预期时间..."></td>
+      </tr>
+      <tr class="row-yellow">
+        <td><span class="risk-badge risk-yellow">本月</span></td>
+        <td>预判IP内容M30（4/17-6/11）视频+美术集中结算规模，更新滚动基线</td>
+        <td>舒飞、殷嘉慕、陶添</td>
+        <td class="editable" contenteditable="true" placeholder="填写结果..."></td>
+        <td class="editable" contenteditable="true" placeholder="当前进展..."></td>
+        <td class="editable" contenteditable="true" placeholder="预期时间..."></td>
+      </tr>
+      <tr class="row-yellow">
+        <td><span class="risk-badge risk-yellow">本月</span></td>
+        <td>UGC研发消耗5.4%（vs基线25%），核实Q2是否有需求积压集中释放</td>
+        <td>李志轶、冯佳雯</td>
+        <td class="editable" contenteditable="true" placeholder="填写结果..."></td>
+        <td class="editable" contenteditable="true" placeholder="当前进展..."></td>
+        <td class="editable" contenteditable="true" placeholder="预期时间..."></td>
+      </tr>
+      <tr>
+        <td><span class="risk-badge risk-green">持续</span></td>
+        <td>每月末更新滚动基线：重新计算扰动，调整后续各月基线值</td>
+        <td>石佳俊</td>
+        <td class="editable" contenteditable="true" placeholder="填写结果..."></td>
+        <td class="editable" contenteditable="true" placeholder="当前进展..."></td>
+        <td class="editable" contenteditable="true" placeholder="预期时间..."></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="text-align:center;color:#bbb;font-size:12px;margin-top:20px;">
+  🦞 龙虾十一 v3 | U5-蛋仔派对 成本管理 | 2026-03-18<br>
+  基线算法：蛋仔派对大型运营期项目美术成本精细化管理实践 Page22/26 | 滚动基线 = 指导基线 - 扰动÷剩余月数
+</div>
+
+</body>
+</html>
+
+
